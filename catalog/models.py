@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -6,12 +7,20 @@ class Category(models.Model):
     slug = models.SlugField(max_length=50, null=False)
 
     class Meta:
-        verbose_name  = "Category"
+        verbose_name = "Category"
         verbose_name_plural = "Categories"
         ordering = ["name"]
 
+    def get_absolute_url(self):
+        return reverse("category", kwargs={"category_slug": self.slug})
+
     def __str__(self):
-        return self.name
+        return f"{self.name}"
+
+
+class ElectronicsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(category__name="electronics")
 
 
 class Product(models.Model):
@@ -73,5 +82,11 @@ class Product(models.Model):
             models.Index(fields=['slug'])
         ]
 
+    def get_absolute_url(self):
+        return reverse("product", kwargs={"product_slug": self.slug})
+
     def __str__(self):
         return f"{self.name} - {self.price}"
+
+    objects = models.Manager()
+    electronics = ElectronicsManager()
