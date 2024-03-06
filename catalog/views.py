@@ -1,16 +1,31 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 
+from .models import Category
+
 cats = {
     "food": "food",
     "animal-goods": "animal goods"
 }
 
+menu = ["Home", "About", "Contacts", "FAQ"]
+
 
 def index(request):
-    # breakpoint()
-    # print(request)
-    return HttpResponse("<h2>Main page</h3>")
+    categories = Category.objects.all()
+    return render(
+        request,
+        "index.html",
+        context={
+            "title": "My Shop - Main page",
+            "menu": menu,
+            "categories": categories
+        }
+    )
+
+
+def about(request):
+    return render(request, "about.html")
 
 
 def categories(request):
