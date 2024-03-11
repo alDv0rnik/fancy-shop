@@ -7,6 +7,14 @@ from .models import Category, Product
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name"]
     prepopulated_fields = {"slug": ("name",)}
+    readonly_fields = [
+        "get_image"
+    ]
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="110" height="100">')
+
+    get_image.short_description = "Image"
 
 
 @admin.register(Product)

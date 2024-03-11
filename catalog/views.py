@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 
-from .models import Category
+from .models import Category, Product
 
 cats = {
     "food": "food",
@@ -32,12 +32,15 @@ def categories(request):
     return HttpResponse("<h3>Catalog</h3>")
 
 
-def category(request, cat):
-    if int(cat) > 2:
-        return redirect('categories', permanent=True)
-    # if request.GET:
-    #     print(request.GET.get("type"))
-    return HttpResponse(f"<h3>Items from category {cat}</h3>")
+def category(request, category_slug):
+    products = Product.objects.all()
+    if category_slug == "electronics":
+        products = Product.electronics.all()
+
+    context = {
+        "products": products
+    }
+    return render(request, "products.html", context=context)
 
 
 def page_not_found(request, exception):
