@@ -1,55 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="w-100  p-4">
-    <style>
-        @media (max-width: 767.98px) {
-          .border-sm-start-none {
-            border-left: none !important;
-          }
-        }
-    </style>
-    {% for product in products %}
-        <div class="row justify-content-center mb-3">
-        <div class="col-md-12">
-            <div class="card shadow-0 border rounded-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                                <img src="{{ product.pic.url }}"
-                                     class="w-50 h-50">
-                                <a href="#!">
-                                    <div class="hover-overlay">
-                                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <h5>{{ product.name }}</h5>
-                            <p class="text-truncate mb-4 mb-md-0">
-                                {{ product.description }}
-                            </p>
-                        </div>
-                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                            <div class="d-flex flex-row align-items-center mb-1">
-                                <h4 class="mb-1 me-1">${{product.price}}</h4>
-<!--                                <span class="text-danger"><s>$20.99</s></span>-->
-                            </div>
-                            <h6 class="text-success">Free shipping</h6>
-                            <div class="d-flex flex-column mt-4">
-                                <button class="btn btn-primary btn-sm" type="button">Details</button>
-                                <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                                    Add to wishlist
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<style>
+    img {
+        width: 150px;
+        height: 300px;
+    }
+</style>
+<div class="album py-5">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for product in products %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card h-100 w-100">
+              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                <img alt="#" class="mx-auto d-block" src="{{ product.pic.url }}"/>
+              </div>
             </div>
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">{{product.description|truncatechars:180 }}</p>
+              <a href="#" class="btn btn-warning">Details</a>
+              <a href="#" class="btn btn-light">Add to favourites</a>
+            </div>
+          </div>
         </div>
+        {% endfor %}
+      </div>
     </div>
-    {% endfor %}
-</section>
+</div>
 {% endblock %}
