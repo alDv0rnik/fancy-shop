@@ -1,3 +1,6 @@
+import decimal
+
+from PIL import Image
 from django.db import models
 from django.urls import reverse
 
@@ -87,6 +90,22 @@ class Product(models.Model):
         indexes = [
             models.Index(fields=['slug'])
         ]
+
+    @property
+    def updated_price(self):
+        if self.discount:
+            new_price = decimal.Decimal(self.price) - (decimal.Decimal(self.price) * (decimal.Decimal(self.discount / 100)))
+            return round(new_price, 2)
+        return round(decimal.Decimal(self.price), 2)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.pic.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (350, 350)
+            img.thumbnail(output_size)
+            img.save(self.pic.path)
 
     def get_absolute_url(self):
         return reverse("product", kwargs={"product_slug": self.slug})

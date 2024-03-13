@@ -3,31 +3,43 @@
 {% block content %}
 <style>
     img {
-        width: 150px;
+        width: 300px;
         height: 300px;
     }
+
 </style>
 <div class="album py-5">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for product in products %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card h-100 w-100">
-              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <img alt="#" class="mx-auto d-block" src="{{ product.pic.url }}"/>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% if products %}
+            {% for product in products %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card h-100 w-100">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <img alt="#" class="mx-auto d-block" src="{{ product.pic.url }}"/>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <p class="card-text">{{product.description|truncatechars:100 }}</p>
+                        {% if product.discount %}
+                            <p class="card-text" style="font-size: 20px;"><strong>${{ product.updated_price }}</strong> <span style="text-decoration: line-through">${{product.price}}</span></p>
+                        {% else %}
+                            <p class="card-text" style="font-size: 20px;"><strong>${{ product.price }}</strong></p>
+                        {% endif %}
+                        <a href="#" class="btn btn-warning">Details</a>
+                        <a href="#" class="btn btn-light">Add to favourites</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+              <div class="text-white text-shadow-1">
+                  <h3>Products not found</h3>
               </div>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{product.name}}</h5>
-              <p class="card-text">{{product.description|truncatechars:180 }}</p>
-              <a href="#" class="btn btn-warning">Details</a>
-              <a href="#" class="btn btn-light">Add to favourites</a>
-            </div>
-          </div>
+            {% endif %}
         </div>
-        {% endfor %}
-      </div>
     </div>
 </div>
 {% endblock %}

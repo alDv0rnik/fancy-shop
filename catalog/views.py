@@ -1,14 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from .models import Category, Product
-
-cats = {
-    "food": "food",
-    "animal-goods": "animal goods"
-}
-
-menu = ["Home", "About", "Contacts", "FAQ"]
 
 
 def index(request):
@@ -18,7 +11,6 @@ def index(request):
         "index.html",
         context={
             "title": "My Shop - Main page",
-            "menu": menu,
             "categories": categories
         }
     )
@@ -33,10 +25,7 @@ def categories(request):
 
 
 def category(request, category_slug):
-    products = Product.objects.all()
-    if category_slug == "electronics":
-        products = Product.electronics.all()
-
+    products = Category.objects.get(slug=category_slug).products.all()
     context = {
         "products": products
     }
