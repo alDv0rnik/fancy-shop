@@ -1,7 +1,12 @@
+import logging
+
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
 from .models import Category, Product
+
+
+logger = logging.getLogger('fancy-shop-logger')
 
 
 def index(request):
@@ -26,6 +31,7 @@ def categories(request):
 
 def category(request, category_slug):
     products = Category.objects.get(slug=category_slug).products.all()
+    logger.info(f"Get all products for category {category_slug}")
     context = {
         "products": products
     }

@@ -101,3 +101,41 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# logger settings
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '%(levelname)s - %(asctime)s - %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'default'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'default',
+            'filename': os.path.join(BASE_DIR, 'logs', 'shop.log'),
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 3,
+            'encoding': 'UTF-8'
+        }
+    },
+    'loggers': {
+        'fancy-shop-logger': {
+            'handlers': [
+                'console',
+                'file'
+            ],
+            'level': 'INFO'
+        }
+    }
+}
+
