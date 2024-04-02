@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container text-center text-dark mt-4 mb-4 border border-dark rounded-3" style=
+        "background: #CEC6F5;">
+    <div class="row">
+        <div class="col-sm-3 ms-4 pt-4 pb-4">
+            <div class="text">
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" class="avatar img-circle" alt="avatar" style=
+                        "width: 150px;
+                             height: 150px;
+                             border-radius: 50%;
+                             border-color: purple;
+                             border-style: solid;
+                             object-fit: cover;
+                             object-position: center;"
+                >
+                {% endif %}
+                <h3 style="margin-top: 1.5rem;">{{ profile.nickname }}</h3>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Information: </h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li><b>Name: </b> {{ profile.first_name }}</li>
+                        <li><b>Surname: </b> {{ profile.last_name }}</li>
+                        <li><b>Email: </b> {{ profile.email }}</li>
+                        <li><b>Registration date: </b> {{ profile.created_at | date:"M d, Y" }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-3 ms-4 pt-4 pb-4">
+                <button type="button" onclick="window.location.href=#"
+                        class="btn btn-outline-light me-2">Update
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            Column
+        </div>
+    </div>
+</div>
+
+{% endblock %}

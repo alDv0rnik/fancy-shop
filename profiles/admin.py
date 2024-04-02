@@ -7,7 +7,7 @@ from profiles.models import Profile
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ["id", "nickname"]
     readonly_fields = [
-        "get_image"
+        "get_image", "slug"
     ]
 
     def get_image(self, obj):

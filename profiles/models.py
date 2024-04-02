@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django_extensions.db.fields import AutoSlugField
 
 
 class Profile(models.Model):
@@ -13,9 +15,13 @@ class Profile(models.Model):
     email = models.EmailField("email", max_length=200)
     nickname = models.CharField("Nickname", max_length=100, default="")
     avatar = models.ImageField("Avatar", upload_to="users/", default="default_user.jpg")
+    slug = AutoSlugField(max_length=100, populate_from=('nickname',))
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse("profile", kwargs={"profile_slug": self.slug})
 
     def __str__(self):
         return f"{self.pk} - {self.user.username}"

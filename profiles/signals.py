@@ -15,7 +15,8 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         profile = Profile.objects.create(
             user=instance,
-            nickname=instance.username
+            nickname=instance.username,
+            email=instance.email
         )
         Profile.save(profile)
         logger.info(f"The profile for user {instance.username} has been created")

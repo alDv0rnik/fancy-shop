@@ -38,21 +38,27 @@
                 <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
             {% if user.is_authenticated %}
-            <span style="margin-right: 20px">Hello, {{ request.user }} </span>
-            <div class="dropdown text-end">
-                <a href="#" class="d-block  text-decoration-none dropdown-toggle" id="dropdownUser1"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ request.user.profile_user.avatar.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
-                </ul>
-            </div>
+                {% if not user.is_superuser %}
+                    <span style="margin-right: 20px">Hello, {{ request.user }} </span>
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block  text-decoration-none dropdown-toggle" id="dropdownUser1"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ request.user.profile_user.avatar.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                            <li><a class="dropdown-item" href="{% url 'profile_details' request.user.profile_user.slug %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <button type="button" onclick="window.location.href={% url 'logout' %}"
+                        class="btn btn-outline-light me-2">Logout
+                    </button>
+                {% endif %}
             {% else %}
             <div class="text-end">
                 <button type="button" onclick="window.location.href={% url 'login' %}"
