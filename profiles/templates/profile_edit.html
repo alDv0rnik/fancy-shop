@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container text-center text-dark mt-4 mb-4 border border-dark rounded-3" style=
+        "background: #CEC6F5;
+         max-width: 500px;">
+    <div class="row mt-4 mb-4">
+        <h3>Edit your profile</h3>
+        <form class="update form mt-3" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <button class="btn btn-outline-dark mx-auto mt-4" type="submit">Save changes</button>
+        </form>
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

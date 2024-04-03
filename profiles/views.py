@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm
+from .forms import CreateUserForm, UserEditForm, ProfileEditForm
 
 from .decorators import unauthenticated_user
 from .models import Profile
@@ -64,3 +64,29 @@ def get_profile_details(request, profile_slug):
         "profile": profile
     }
     return render(request, 'profile.html', context=context)
+
+
+@login_required(login_url="login")
+def edit_profile_details(request, profile_slug):
+    if request.method == "POST":
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = ProfileEditForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile_user
+        )
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            logger.info(f"Profile for user {request.user.username} has been updated")
+            messages.info(request, "Your profile has been updated")
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile_user)
+
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form
+    }
+
+    return render(request, "profile_edit.html", context=context)

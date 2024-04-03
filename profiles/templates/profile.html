@@ -31,14 +31,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-3 ms-4 pt-4 pb-4">
-                <button type="button" onclick="window.location.href=#"
-                        class="btn btn-outline-light me-2">Update
+            <div class="col pt-4 pb-4">
+                <button type="button" onclick="window.location.href='{% url 'profile_edit' profile.slug %}'"
+                        class="btn btn-outline-dark me-2">Update profile
                 </button>
             </div>
         </div>
-        <div class="col">
-            Column
+        <div class="col-sm-3 mt-4 mb-4 border-start">
+            <h3>Orders history:</h3>
         </div>
     </div>
 </div>
