@@ -3,6 +3,6 @@ from catalog.views import *
 
 
 urlpatterns = [
-    path("category/", categories, name='categories'),
-    path("category/<slug:category_slug>/", category, name='category'),
+    # path("", ShopHome.as_view(), name='categories'),
+    path("<slug:category_slug>/", category, name='category'),
 ]

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
 
+from catalog.models import Product
+
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -16,6 +18,12 @@ class Profile(models.Model):
     nickname = models.CharField("Nickname", max_length=100, default="")
     avatar = models.ImageField("Avatar", upload_to="users/", default="default_user.jpg")
     slug = AutoSlugField(max_length=100, populate_from=('nickname',))
+    favourites = models.ManyToManyField(
+        Product,
+        blank=True,
+        default=None,
+        related_name="fav_product"
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

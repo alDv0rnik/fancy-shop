@@ -2,6 +2,7 @@ import logging
 
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from .models import Category, Product
 
@@ -9,24 +10,20 @@ from .models import Category, Product
 logger = logging.getLogger('fancy-shop-logger')
 
 
-def index(request):
-    categories = Category.objects.all()
-    return render(
-        request,
-        "index.html",
-        context={
-            "title": "My Shop - Main page",
-            "categories": categories
-        }
-    )
+class ShopHome(ListView):
+    model = Category
+    template_name = "index.html"
+    context_object_name = "categories"
+    paginate_by = 3
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ShopHome, self).get_context_data(**kwargs)
+        context["title"] = "My Shop - Main page"
+        return context
 
 
 def about(request):
     return render(request, "about.html")
-
-
-def categories(request):
-    return HttpResponse("<h3>Catalog</h3>")
 
 
 def category(request, category_slug):

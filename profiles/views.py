@@ -1,9 +1,14 @@
 import logging
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
+
+from catalog.models import Product
 from .forms import CreateUserForm, UserEditForm, ProfileEditForm
 
 from .decorators import unauthenticated_user
@@ -90,3 +95,25 @@ def edit_profile_details(request, profile_slug):
     }
 
     return render(request, "profile_edit.html", context=context)
+
+
+def add_to_favourites(request, profile_slug, product_id):
+    product = Product.objects.get(pk=product_id)
+    profile = request.user.profile_user
+    if profile.favourites.filter(pk=product_id).exists():
+        profile.favourites.remove(product)
+    else:
+        profile.favourites.add(product)
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+
+def get_favourites_list(request, profile_slug):
+    profile = request.user.profile_user
+    products_list = profile.favourites.all()
+    paginator = Paginator(products_list, 3)
+    page_number = request.GET.get("page", 1)
+    products = paginator.page(page_number)
+    context = {
+        "products": products
+    }
+    return render(request, "favourites.html", context=context)
