@@ -1,8 +1,8 @@
 import logging
 
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Category, Product
 
@@ -22,6 +22,18 @@ class ShopHome(ListView):
         return context
 
 
+class ProductDetail(DetailView):
+    model = Product
+    template_name = 'product.html'
+    context_object_name = 'product'
+    slug_url_kwarg = 'product_slug'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductDetail, self).get_context_data(**kwargs)
+        context["title"] = f"My Shop - {self.model.name}"
+        return context
+
+
 def about(request):
     return render(request, "about.html")
 
@@ -29,6 +41,15 @@ def about(request):
 def category(request, category_slug):
     products = Category.objects.get(slug=category_slug).products.all()
     logger.info(f"Get all products for category {category_slug}")
+    context = {
+        "products": products
+    }
+    return render(request, "products.html", context=context)
+
+
+def search(request):
+    query = request.GET.get("q")
+    products = Product.objects.filter(name__icontains=query)
     context = {
         "products": products
     }
