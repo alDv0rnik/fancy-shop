@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
 from .models import Category, Product
+from cart.forms import CartAddForm
 
 
 logger = logging.getLogger('fancy-shop-logger')
@@ -27,10 +28,12 @@ class ProductDetail(DetailView):
     template_name = 'product.html'
     context_object_name = 'product'
     slug_url_kwarg = 'product_slug'
+    cart_form = CartAddForm()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
         context["title"] = f"My Shop - {self.model.name}"
+        context["cart_form"] = self.cart_form
         return context
 
 
