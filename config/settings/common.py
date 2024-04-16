@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'catalog.apps.CatalogConfig',
-    'profiles.apps.ProfilesConfig'
+    'profiles.apps.ProfilesConfig',
+    'cart.apps.CartConfig'
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,5 @@ LOGGING = {
     }
 }
 
+CART_SESSION_ID = "cart"
+MAX_CART_ITEMS = 10
