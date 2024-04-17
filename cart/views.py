@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from catalog.models import Product
 from .cart import Cart
@@ -15,8 +16,22 @@ def add_to_cart(request, product_id):
                 quantity=cart_form.cleaned_data["quantity"],
                 override_quantity=cart_form.cleaned_data["override_quantity"]
             )
-    return redirect('home')
+    return redirect("cart:cart_details")
 
 
 def cart_details(request):
-    pass
+    cart = Cart(request)
+    for item in cart:
+        item["update_quantity_form"] = CartAddForm(initial={
+            "quantity": item["quantity"],
+            "override_quantity": True
+        })
+    return render(request, 'cart_details.html', context={"cart": cart})
+
+
+def remove_from_cart(request, product_id):
+    cart = Cart(request)
+    if request.method == "POST":
+        product = get_object_or_404(Product, pk=product_id)
+        cart.remove_item(product)
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])

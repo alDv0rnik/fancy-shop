@@ -108,7 +108,10 @@ class Product(models.Model):
             img.save(self.pic.path)
 
     def get_absolute_url(self):
-        return reverse("product_detail", kwargs={"product_slug": self.slug})
+        return reverse("product_detail", kwargs={
+            "product_slug": self.slug,
+            "category_slug": self.category.slug
+        })
 
     def __str__(self):
         return f"{self.name} - {self.price}"

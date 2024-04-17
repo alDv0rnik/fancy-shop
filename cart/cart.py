@@ -15,7 +15,7 @@ class Cart:
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {
-                "quantity": quantity,
+                "quantity": 0,
                 "price": str(product.price)
             }
         if override_quantity:
@@ -29,7 +29,7 @@ class Cart:
         self.session.modified = True
 
     def remove_item(self, product):
-        product_id = product.id
+        product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
@@ -40,7 +40,7 @@ class Cart:
         cart = self.cart.copy()
 
         for product in products:
-            cart[str(product.id)] = product
+            cart[str(product.id)]['product'] = product
 
         for item in cart.values():
             item["price"] = Decimal(item["price"])
