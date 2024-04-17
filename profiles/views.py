@@ -110,7 +110,7 @@ def add_to_favourites(request, profile_slug, product_id):
 def get_favourites_list(request, profile_slug):
     profile = request.user.profile_user
     products_list = profile.favourites.all()
-    paginator = Paginator(products_list, 3)
+    paginator = Paginator(products_list, 6)
     page_number = request.GET.get("page", 1)
     products = paginator.page(page_number)
     context = {

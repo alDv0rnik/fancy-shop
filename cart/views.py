@@ -34,5 +34,5 @@ def cart_detail(request):
     for item in cart:
         item['update_quantity_form'] = CartAddForm(initial={
             'quantity': item['quantity'],
-            'override': True})
+            'override_quantity': True})
     return render(request, 'details.html', {'cart': cart})

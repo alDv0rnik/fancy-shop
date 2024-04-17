@@ -14,13 +14,3 @@ class CartAddForm(forms.Form):
         initial=False,
         widget=forms.HiddenInput
     )
-
-    # class Meta:
-    #     widgets = {
-    #         "quantity": forms.ChoiceField(
-    #             choices=PRODUCT_QUANTITY_CHOICES,
-    #             attrs={
-    #                 "class": "form-control",
-    #                 "style": "height: 20px;"
-    #             })
-    #     }
