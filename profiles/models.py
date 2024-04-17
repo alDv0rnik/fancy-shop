@@ -12,9 +12,6 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="profile_user"
     )
-    first_name = models.CharField("First Name", max_length=100)
-    last_name = models.CharField("Last Name", max_length=200)
-    email = models.EmailField("email", max_length=200)
     nickname = models.CharField("Nickname", max_length=100, default="")
     avatar = models.ImageField("Avatar", upload_to="users/", default="default_user.jpg")
     slug = AutoSlugField(max_length=100, populate_from=('nickname',))

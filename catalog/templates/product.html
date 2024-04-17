@@ -16,13 +16,12 @@
                 <div class="d-flex gap-3 mb-4">
                     {% csrf_token %}
                     {{ cart_form }}
-<!--                    <input type="number" class="form-control" value="1" style="max-width: 80px;">-->
                     <button class="btn btn-primary" type="submit">Add to Cart</button>
                 </div>
             </form>
             {% if user.is_authenticated and not request.user.is_superuser%}
                 <div>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="window.location.href={% url 'add_favourites' request.user.profile_user.slug product.id %}" type="button">Add to Wishlist</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="window.location.href='{% url 'add_favourites' request.user.profile_user.slug product.id %}'" type="button">Add to Wishlist</button>
                 </div>
             {% endif %}
         </div>
