@@ -57,6 +57,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -141,6 +142,6 @@ LOGGING = {
 }
 
 CART_SESSION_ID = "cart"
-MAX_CART_ITEMS = 20
+MAX_CART_ITEMS = 10
 
 

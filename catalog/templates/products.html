@@ -22,7 +22,7 @@
                         {% else %}
                             <p class="card-text" style="font-size: 20px;"><strong>${{ product.price }}</strong></p>
                         {% endif %}
-                            <a href="{% url 'product_detail' product.category.slug product.slug %}" class="btn btn-warning">Details</a>
+                            <a href="{% url 'catalog:product_detail' product.category.slug product.slug %}" class="btn btn-warning">Details</a>
                         {% if not request.user.is_superuser %}
                             <a href="{% url 'add_favourites' request.user.profile_user.slug product.id %}" class="btn btn-light">Add to favourites</a>
                         {% endif %}

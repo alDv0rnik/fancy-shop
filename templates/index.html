@@ -10,7 +10,7 @@
                  style="background: linear-gradient(rgba(39,37,35, 0.5), rgba(39,37,35,0.5)), url({{ category.image.url }}); background-size: cover;">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                     <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ category.name }}</h2>
-                    <a href="{% url 'category' category.slug %}" class="stretched-link"></a>
+                    <a href="{% url 'catalog:category' category.slug %}" class="stretched-link"></a>
                 </div>
             </div>
         </div>

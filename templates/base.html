@@ -45,12 +45,22 @@
                          class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="{% url 'profile_details' request.user.profile_user.slug %}">Profile</a>
-                    </li>
+                    <li><a class="dropdown-item" href="{% url 'profile_details' request.user.profile_user.slug %}">Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'favourites_list' request.user.profile_user.slug %}">Favourites</a></li>
                     <li>
-                        <hr class="dropdown-divider">
+                        {% with total_items=cart|length %}
+                            {% if total_items > 0 %}
+                                <a class="dropdown-item" href="{% url 'cart:cart_detail' %}">
+                                    My Cart    <span class="badge bg-danger" style="border-radius: 15px">{{ total_items }}</span>
+                                </a>
+                            {% else %}
+                                <a class="dropdown-item" href="{% url 'cart:cart_detail' %}">
+                                    My Cart
+                                </a>
+                            {% endif %}
+                        {% endwith %}
                     </li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
                 </ul>
             </div>

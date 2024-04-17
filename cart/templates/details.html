@@ -1,53 +1,98 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-
-    <h1>Your shopping cart</h1>
-    <table class="cart">
-        <thead>
-        <tr>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Remove</th>
-            <th>Unit price</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
-            {% with product=item.product %}
-                <tr>
-                    <td>
-                        <a href="{{ product.get_absolute_url }}">
-                            <img src="{{ product.pic.url }}" alt="Product Image">
-                        </a>
-                    </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>
-                        <form action="{% url "cart:cart_remove" product.id %}"
-                              method="post">
-                            <input type="submit" value="Remove">
-                            {% csrf_token %}
-                        </form>
-                    </td>
-                    <td class="num">${{ item.price }}</td>
-                    <td class="num">${{ item.total_price }}</td>
-                </tr>
-            {% endwith %}
-        {% endfor %}
-        <tr class="total">
-            <td>Total</td>
-            <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <p class="text-right">
-        <a href="{% url "shop:product_list" %}" class="button
- light">Continue shopping</a>
-        <a href="#" class="button">Checkout</a>
-    </p>
+    <section class="w-50 mb-4 ms-auto me-auto mt-4">
+        <div class="border rounded-3">
+            <section class="w-100 px-3 py-5" style="background-color: #CEC6F5;">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-xl-11">
+                        <div class="row">
+                            <div class="col p-2">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                                </div>
+                            </div>
+                            <div class="col text-end p-2">
+                                {% with total_items=cart|length %}
+                                    {% if total_items > 0 %}
+                                        <h3>
+                                            Your cart:
+                                            <a href="{% url "cart:cart_detail" %}">
+                                                {{ total_items }} item{{ total_items|pluralize }},
+                                                ${{ cart.get_total_price }}
+                                            </a>
+                                        </h3>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                        {% if not cart %}
+                            <div class="card">
+                                <div class="card-body p-4 text-center ">
+                                    <h3>Your cart is empty</h3>
+                                </div>
+                            </div>
+                        {% else %}
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                    <div class="card rounded-3 mb-4">
+                                        <div class="card-body p-4">
+                                            <div class="row d-flex justify-content-between align-items-center">
+                                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    <img src="{{ product.pic.url }}"
+                                                         class="img-fluid rounded-3" alt="Image">
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="lead fw-normal mb-2">{{ product.name }}</p>
+                                                    <p><span
+                                                            class="text-muted">Category: </span>{{ product.category.name }}
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                    <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                                        <div class="d-flex gap-3">
+                                                            {% csrf_token %}
+                                                            {{ item.update_quantity_form.quantity }}
+                                                            {{ item.update_quantity_form.override }}
+                                                            <button class="btn btn-primary" type="submit">Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                    <h5 class="mb-0">$ {{ item.total_price }}</h5>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                    <form action="{% url 'cart:cart_remove' product.id %}"
+                                                          method="post">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-danger" type="submit">X</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                            {% endfor %}
+                            <div class="card">
+                                <div class="row p-4">
+                                    <div class="col p-2">
+                                        <button type="button" class="btn btn-primary btn-block">
+                                            Proceed to Pay
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark btn-block">
+                                            Continue shopping
+                                        </button>
+                                    </div>
+                                    <div class="col text-end p-2">
+                                        <h4>Total price: $ {{ cart.get_total_price }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
 {% endblock %}

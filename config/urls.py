@@ -10,7 +10,7 @@ urlpatterns = [
     path('', ShopHome.as_view(), name="home"),
     path('about/', about, name="about"),
     path('admin/', admin.site.urls),
-    path('catalog/', include('catalog.urls')),
+    path('catalog/', include('catalog.urls', namespace='catalog')),
     path('profile/', include('profiles.urls')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('register/', register_user, name="register"),
