@@ -41,11 +41,6 @@ class UserEditForm(forms.ModelForm):
             })
         }
 
-    def save(self, *args, **kwargs):
-        instance = super(UserEditForm, self).save(*args, **kwargs)
-        update_profile(instance)
-        return instance
-
 
 class ProfileEditForm(forms.ModelForm):
 
