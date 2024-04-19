@@ -12,6 +12,10 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="profile_user"
     )
+    phone_number = models.CharField(verbose_name="Phone", max_length=50, blank=True)
+    shipping_address = models.CharField(verbose_name="Address", max_length=50, blank=True)
+    postal_code = models.CharField(verbose_name="Postcode", max_length=50, blank=True)
+    city = models.CharField(verbose_name="City", max_length=50, blank=True)
     nickname = models.CharField("Nickname", max_length=100, default="")
     avatar = models.ImageField("Avatar", upload_to="users/", default="default_user.jpg")
     slug = AutoSlugField(max_length=100, populate_from=('nickname',))
