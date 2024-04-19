@@ -52,3 +52,10 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ["avatar"]
+
+
+class ShippingOrderEditForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ["phone_number", "shipping_address", "postcode", "city"]

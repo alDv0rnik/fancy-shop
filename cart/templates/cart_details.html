@@ -68,7 +68,7 @@
                         <div class="card">
                             <div class="row p-4">
                                 <div class="col p-2">
-                                    <button class="btn btn-primary" type="button">Checkout</button>
+                                    <button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:create_order' %}'">Checkout</button>
                                     <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'" type="button">Continue shopping</button>
                                 </div>
                                 <div class="col p-2 text-end">

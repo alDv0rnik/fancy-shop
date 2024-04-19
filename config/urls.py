@@ -13,6 +13,7 @@ urlpatterns = [
     path('catalog/', include('catalog.urls')),
     path('profile/', include('profiles.urls')),
     path('cart/', include('cart.urls', namespace="cart")),
+    path('order/', include('orders.urls', namespace="orders")),
     path('register/', register_user, name="register"),
     path('login/', login_user, name="login"),
     path('logout/', logout_user, name="logout"),
