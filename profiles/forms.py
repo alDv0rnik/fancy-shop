@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django import forms
 
 from profiles.models import Profile
-from .utils import update_profile
 
 
 class CreateUserForm(UserCreationForm):
