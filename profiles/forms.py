@@ -41,11 +41,6 @@ class UserEditForm(forms.ModelForm):
             })
         }
 
-    def save(self, *args, **kwargs):
-        instance = super(UserEditForm, self).save(*args, **kwargs)
-        update_profile(instance)
-        return instance
-
 
 class ProfileEditForm(forms.ModelForm):
 
@@ -59,3 +54,32 @@ class ShippingOrderEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ["phone_number", "shipping_address", "postcode", "city"]
+        labels = {
+            "phone_number": "",
+            "shipping_address": "",
+            "postcode": "",
+            "city": ""
+        }
+        widgets = {
+            "phone_number": forms.TextInput(attrs={
+                "placeholder": "Phone number",
+                "class": "form-control rounded-4",
+                "style": "max-width: 300px;"
+            }),
+            "shipping_address": forms.TextInput(attrs={
+                "placeholder": "Address",
+                "class": "form-control rounded-4",
+                "style": "max-width: 300px;"
+            }),
+            "postcode": forms.TextInput(attrs={
+                "placeholder": "Postcode",
+                "class": "form-control rounded-4",
+                "style": "max-width: 300px;"
+            }),
+            "city": forms.TextInput(attrs={
+                "placeholder": "City",
+                "class": "form-control rounded-4",
+                "style": "max-width: 300px;"
+            })
+        }
+

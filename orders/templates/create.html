@@ -5,11 +5,17 @@
     <div class="border rounded-3">
         <section class="px-3 py-5" style="background-color: #CEC6F5;">
             <div class="row d-flex justify-content-center">
+                <h3 class="mb-2 mt-2" style="text-align: center;">Checkout information</h3>
                 <div class="col-xl-11">
+                    <ul class="list-unstyled mt-2 mb-2">
+                        <li><b>Name: </b> {{ request.user.first_name }}</li>
+                        <li><b>Surname: </b> {{ request.user.last_name }}</li>
+                        <li><b>Email: </b> {{ request.user.email }}</li>
+                    </ul>
                     <form action="{% url 'orders:create_order' %}" method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button class="btn btn-outline-dark" type="submit">Place order</button>
+                        <button class="btn btn-outline-dark" type="submit" style="width: 300px;">Place order</button>
                     </form>
                 </div>
             </div>

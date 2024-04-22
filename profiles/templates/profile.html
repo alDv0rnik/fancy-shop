@@ -24,9 +24,9 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li><b>Name: </b> {{ profile.first_name }}</li>
-                        <li><b>Surname: </b> {{ profile.last_name }}</li>
-                        <li><b>Email: </b> {{ profile.email }}</li>
+                        <li><b>Name: </b> {{ request.user.first_name }}</li>
+                        <li><b>Surname: </b> {{ request.user.last_name }}</li>
+                        <li><b>Email: </b> {{ request.user.email }}</li>
                         <li><b>Registration date: </b> {{ profile.created_at | date:"M d, Y" }}</li>
                     </ul>
                 </div>
