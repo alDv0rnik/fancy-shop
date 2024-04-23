@@ -47,7 +47,7 @@
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                     <li><a class="dropdown-item" href="{% url 'profile_details' request.user.profile_user.slug %}">Profile</a>
                     </li>
-                    <li><a class="dropdown-item" href="{% url 'favourites_list' request.user.profile_user.slug %}">Favourites</a></li>
+                    <li><a class="dropdown-item" href="{% url 'favourites_list'  %}">Favourites</a></li>
                     {% with total_items=cart|length %}
                         {% if total_items > 0 %}
                             <li>
