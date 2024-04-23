@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-# print(BASE_DIR)
 ENV_PATH = os.path.join(BASE_DIR, ".env")
 
 load_dotenv(ENV_PATH)
@@ -43,6 +42,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middleware.SetUserAgentMiddleware',
+    'config.middleware.BlockMobileMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
